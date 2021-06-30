@@ -1,40 +1,38 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    value: '',
-    currencies: []
+    fromValue: '',
+    toValue: '',
+    fromCurrency: 'USD',
+    toCurrency: 'USD',
+    currencies: [
+         "USD",
+         "RUB",
+         "EUR",
+         "PLN",
+         "CNY"
+    ]
 };
-
-export const fetchCurrencyAsync = createAsyncThunk(
-  'currency/fetchList',
-  async () => {
-    const response = await fetchList();
-    return response.data;
-  }
-);
-
-function fetchList() {
-    let url = 'https://v2.api.forex/infos/currencies.json';
-    return fetch(url);
-}
 
 export const currencySlice = createSlice({
   name: 'currency',
   initialState,
   reducers: {
-    selectCurrency: (state, action) => {
-        state.currencies = action.payload;
+    selectFromCurrency: (state, action) => {
+        state.fromCurrency = action.payload;
+    },
+    selectToCurrency: (state, action) => {
+        state.toCurrency = action.payload;
     }
   },
-  extraReducers: (builder) => {
-   builder
-     .addCase(fetchCurrencyAsync.fulfilled, (state, action) => {
-       state.currencies = action.payload;
-     });
- }
+
 });
 
-export const { selectCurrency } = currencySlice.actions;
+export const { selectFromCurrency } = currencySlice.actions;
 export const getCurrency = (state) => state.currency.currencies;
+export const getFromCurrency = (state) => state.currency.fromCurrency;
+export const getToCurrency = (state) => state.currency.toCurrency;
+
+export const { selectToCurrency } = currencySlice.actions;
 
 export default currencySlice.reducer;

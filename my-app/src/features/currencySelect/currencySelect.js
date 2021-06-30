@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrency, getCurrency, fetchCurrencyAsync } from './currencySelectSlice';
+import styles from './currencySelect.module.css';
+import { selectFromCurrency, selectToCurrency, getCurrency } from './currencySelectSlice';
 
 export function CurrencySelect() {
   const dispatch = useDispatch();
   const items = useSelector(getCurrency);
 
-  console.log(items);
-  fetchCurrencyAsync();
   return (
-    <div>
+    <div className={styles.row}>
       <div>
-        <select >
-            options={items.map((item) =>
-                <option id={item["currency_code"]} key={item["currency_code"]}>{item.name}</option>
+        <span>From</span>
+        <select onChange={(e) => dispatch(selectFromCurrency(e.target.value))}>
+            {items.map((item) =>
+                <option id={item} key={item}>{item}</option>
             )}
-            onChange={(e) => dispatch(selectCurrency(e.target.value))}
+        </select>
+      </div>
+      <div>
+        <span>To</span>
+        <select onChange={(e) => dispatch(selectToCurrency(e.target.value))}>
+            {items.map((item) =>
+                <option id={item} key={item}>{item}</option>
+            )}
         </select>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Counter } from './features/counter/Counter';
 import { CurrencySelect } from './features/currencySelect/currencySelect';
+import { ResultButton } from './features/resultButton/resultButton';
 import './App.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
         <CurrencySelect />
         <Counter />
+        <ResultButton />
     </div>
   );
 }
