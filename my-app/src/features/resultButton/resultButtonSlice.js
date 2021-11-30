@@ -5,20 +5,19 @@ const initialState = {
     currencyRate: 0
 };
 
-  
 const socket = new WebSocket('wss://ws-feed-public.sandbox.exchange.coinbase.com');
 
 export const fetchCurrencyRateAsync = createAsyncThunk('currency/fetchRate', async (value) => {
   let promise = new Promise((resolve, reject) => {
     socket.onmessage = function(event) {
-      console.log(event.data);
+      alert('data from websocket!!!');
+      alert(event.data);
       resolve(event.data);
     };
   });
 
-  // socket.onopen = function(e) {
-    socket.send('{"type": "subscribe","channels": [{ "name": "status"}]}');
-  // };
+  socket.send('{"type": "subscribe","channels": [{ "name": "status"}]}');
+
   
   return await promise; 
     // const response = await client.get(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${value.from}&to_currency=${value.to}&apikey=IWAWBL3HLYTV52OW`);    
@@ -36,7 +35,8 @@ export const resultButtonSlice = createSlice({
   extraReducers: (builder) => {
    builder
      .addCase(fetchCurrencyRateAsync.fulfilled, (state, action) => {
-       state.currencyRate = action.payload["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+      //  state.currencyRate = action.payload["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+       state.currencyRate = 2.5;
 
      });
  }
