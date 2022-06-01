@@ -5,10 +5,10 @@ const initialState = {
     currencyRate: 0
 };
 
-
 export const fetchCurrencyRateAsync = createAsyncThunk('currency/fetchRate', async (value) => {
     const response = await client.get(`https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${value.from}&to_currency=${value.to}&apikey=IWAWBL3HLYTV52OW`);
     return response;
+  }
 );
 
 export const resultButtonSlice = createSlice({
